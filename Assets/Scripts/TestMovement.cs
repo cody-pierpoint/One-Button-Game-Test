@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class TestMovement : MonoBehaviour
@@ -12,11 +13,13 @@ public class TestMovement : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private float distance;
     [SerializeField] private float maxDistance;
-    [SerializeField] private bool isLockedOn = false;
+    [SerializeField] private bool isLockedOn;
     [SerializeField] private int currentTarget;
-    [SerializeField] private Transform tempTarget;
-    public Vector3 direction = Vector3.up;
+    [SerializeField] private GameObject tempTarget;
+    [SerializeField] private GameObject ClingObjectPrefab;
 
+    public Vector3 direction = Vector3.up;
+    bool targetAbove;
     bool targetOnRight;
 
     // Start is called before the first frame update
@@ -28,13 +31,14 @@ public class TestMovement : MonoBehaviour
     {
         //player.transform.rotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         movement = Vector3.up;
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        TargetSetup();
+        //TargetSetup();
         CircleMotion();
 
 
@@ -122,11 +126,17 @@ public class TestMovement : MonoBehaviour
     private void CircleMotion()
     {
         transform.Translate(Vector3.up * Time.deltaTime * speed);
+        //  isLockedOn = (closestTarget != null);
+        //  if(isLockedOn == true)
+
+        TargetSetup();
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Vector3 relativePoint = transform.InverseTransformPoint(TargetSetup().transform.position); // establish what is current target
+            tempTarget = closestTarget;
 
-            targetOnRight = (relativePoint.x > 0);
+            Vector3 relativePointX = transform.InverseTransformPoint(tempTarget.transform.position); // establish what is current target
+            targetOnRight = (relativePointX.x > 0);
+            //isLockedOn = false;
         }
 
         if (Input.GetKey(KeyCode.Space))
@@ -134,13 +144,27 @@ public class TestMovement : MonoBehaviour
 
             if (targetOnRight)
             {
-                transform.right = TargetSetup().transform.position - transform.position;
+                transform.right = tempTarget.transform.position - transform.position;
+                // isLockedOn = false;
             }
             else
             {
-                transform.right = -(TargetSetup().transform.position - transform.position);
+                transform.right = -(tempTarget.transform.position - transform.position);
+                // isLockedOn = false;
             }
         }
+        /*  if(Input.GetKeyUp(KeyCode.Space))
+          {
+              closestTarget = TargetSetup();
+
+          }
+          else
+          {
+              isLockedOn = true;
+          }*/
+
+
+
     }
 
     private GameObject TargetSetup()
@@ -149,12 +173,17 @@ public class TestMovement : MonoBehaviour
         closestTarget = null;
         maxDistance = Mathf.Infinity;
         Vector3 position = transform.position;
-
-        foreach(GameObject target in targets)
+        if (closestTarget == targetAbove)
         {
+            // distance *= 1.3f;
+            Debug.Log(distance);
+        }
+        foreach (GameObject target in targets)
+        {
+
             Vector3 diff = target.transform.position - position;
             distance = diff.sqrMagnitude;
-            if(distance < maxDistance)
+            if (distance < maxDistance)
             {
                 closestTarget = target;
                 maxDistance = distance;
@@ -162,6 +191,7 @@ public class TestMovement : MonoBehaviour
 
 
         }
+
         return closestTarget;
 
     }
@@ -182,10 +212,37 @@ public class TestMovement : MonoBehaviour
 
     }
 
-    
+
+
+    private void SpawnEnemys()
+    {
+        //Instantiate(ClingObjectPrefab,gameObject,)
+
+
+    }
+
+    private void SpherecastTest()
+    {
+       // Physics2D.CircleCast(player, 2)
+
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Cling"))
+        {
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Wall")
+        {
+            Destroy(gameObject);
+            Debug.Log("Wall touched");
+        }
 
 
 
+    }
 
 }
 #region working Code for circle motion
