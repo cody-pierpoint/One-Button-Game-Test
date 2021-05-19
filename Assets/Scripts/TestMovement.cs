@@ -176,7 +176,7 @@ public class TestMovement : MonoBehaviour
         if (closestTarget == targetAbove)
         {
             // distance *= 1.3f;
-            Debug.Log(distance);
+            //Debug.Log(distance);
         }
         foreach (GameObject target in targets)
         {
@@ -228,21 +228,7 @@ public class TestMovement : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Cling"))
-        {
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.tag == "Wall")
-        {
-            Destroy(gameObject);
-            Debug.Log("Wall touched");
-        }
-
-
-
-    }
+   
 
 }
 #region working Code for circle motion
