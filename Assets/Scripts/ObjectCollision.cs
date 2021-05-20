@@ -5,6 +5,24 @@ using UnityEngine;
 public class ObjectCollision : MonoBehaviour
 {
     [SerializeField] private GameObject camera;
+    [SerializeField] private GameObject deathPanel;
+    [SerializeField] private GameObject player;
+
+    private bool isDead = false;
+    private bool Isdead
+    {
+        get
+        {
+            return isDead;
+        }
+        set
+        {
+            isDead = value;
+            deathPanel.SetActive(true);
+            Time.timeScale = value ? 0 : 1;
+        }
+      
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,14 +39,17 @@ public class ObjectCollision : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Cling"))
         {
-            Destroy(gameObject);
+            Destroy(player);
+            isDead = true;
 
         }
         if (collision.gameObject.tag == "Wall")
         {
-            Destroy(gameObject);
+            Destroy(player);
             Debug.Log("Wall touched");
+            isDead = true;
         }
+
 
 
         Debug.Log(collision);
