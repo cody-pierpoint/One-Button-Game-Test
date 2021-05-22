@@ -10,9 +10,9 @@ public class SpawnClingObjects : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject deathPanel;
     private int scoreTimer;
-    private float spawntimer = 1f;
-    private float countdown;
-    private Vector3 objectpos;
+   // private float spawntimer = 1f;
+   // private float countdown;
+   // private Vector3 objectpos;
 
     public float xMin;
     public float xMax;
@@ -37,7 +37,7 @@ public class SpawnClingObjects : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        countdown = spawntimer;
+       // countdown = spawntimer;
     }
 
     // Update is called once per frame
@@ -46,12 +46,12 @@ public class SpawnClingObjects : MonoBehaviour
         if (player != null)
         {
             Score();
-            countdown -= Time.deltaTime;
-            if (countdown <= 0)
-            {
-                SpawnObjects();
-                countdown = spawntimer;
-            }
+            //countdown -= Time.deltaTime;
+            //if (countdown <= 0)
+            //{
+            //    SpawnObjects();
+            //    countdown = spawntimer;
+            //}
 
         }
 
@@ -64,15 +64,15 @@ public class SpawnClingObjects : MonoBehaviour
         
     }
 
-    void SpawnObjects()
-    {
+    //void SpawnObjects()
+    //{
         
-        objectpos = new Vector3(Random.Range(xMin, yMin), Random.Range(yMin, yMax) + player.transform.position.y );
+    //    objectpos = new Vector3(Random.Range(xMin, yMin), Random.Range(yMin, yMax) + player.transform.position.y );
 
-        GameObject createdObject = Instantiate(prefab);
-        createdObject.transform.parent = gameObject.transform;
-        createdObject.transform.position = objectpos;
-    }
+    //    GameObject createdObject = Instantiate(prefab);
+    //    createdObject.transform.parent = gameObject.transform;
+    //    createdObject.transform.position = objectpos;
+    //}
 
 
 
