@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class TestMovement : MonoBehaviour
@@ -29,7 +28,6 @@ public class TestMovement : MonoBehaviour
     }
     void Start()
     {
-        //player.transform.rotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         movement = Vector3.up;
 
     }
@@ -40,128 +38,43 @@ public class TestMovement : MonoBehaviour
     {
         //TargetSetup();
         CircleMotion();
-
-
-
-
-
-
-
-        /*
-        //MoveTest2();
-        // targets[currentTarget] = GameObject.FindGameObjectWithTag("Cling");
-        //distance = Vector3.Distance(transform.position, target[currentTarget].transform.position);
-        //currentTarget = target.Length;
-        if (!isLockedOn)
-        {
-            player.transform.Translate(transform.up * speed * Time.deltaTime);
-
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            //transform.LookAt(target.position, transform.localPosition.);
-            //transform.Translate(transform.right);
-
-            player.transform.parent = target.transform;
-            target.transform.Rotate(transform.forward * Time.deltaTime);
-            isLockedOn = true;
-
-
-        }
-        //else if (Input.GetKey(KeyCode.Space))
-        //{
-        //    //player.transform.parent = target.transform;
-        //    player.transform.Rotate(-transform.forward);
-        //    isLockedOn = true;
-
-
-
-        //}
-        else
-        {
-
-            //player.transform.Translate(transform.up * speed * Time.deltaTime);
-            isLockedOn = false;
-        }
-
-
-        //player.transform.Translate(transform.up * speed * Time.deltaTime);
-
-
-
-
-        //MoveTowardsTest();
-
-
-        //if (Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    player.transform.Translate(transform.forward * speed * Time.deltaTime);
-
-        //}
-        //target].transform.parent = null;
-
-
-
-
-        //   transform.LookAt(target);
-        //   transform.rotation *= Quaternion.FromToRotation(Vector3.left, Vector3.forward);
-        //  // transform.Translate(transform.up * speed * Time.deltaTime);
-        //if(Vector3.Distance(transform.position, target.transform.position) >= 5f)
-        //   {
-        //       transform.Translate(-transform.up * speed * Time.deltaTime);
-        //       transform.Translate(transform.right * speed * Time.deltaTime);
-
-
-        //   }
-        //else if(Vector3.Distance(transform.position, target.transform.position) <= 5f)
-        //   {
-        //       transform.Translate(transform.up * speed * Time.deltaTime);
-        //       transform.Translate(-transform.right * speed * Time.deltaTime);
-        //   }
-        //transform.Translate(-transform.right * speed * Time.deltaTime);
-        */
     }
 
     private void CircleMotion()
     {
+        
         transform.Translate(Vector3.up * Time.deltaTime * speed);
-        //  isLockedOn = (closestTarget != null);
-        //  if(isLockedOn == true)
+       
 
         TargetSetup();
         if (Input.GetKeyDown(KeyCode.Space))
         {
+           //temp target is closest Target
             tempTarget = closestTarget;
-
-            Vector3 relativePointX = transform.InverseTransformPoint(tempTarget.transform.position); // establish what is current target
+            // establish what is current target
+            Vector3 relativePointX = transform.InverseTransformPoint(tempTarget.transform.position); 
+            // target on the right becomes the inverse transform point of the temp target
             targetOnRight = (relativePointX.x > 0);
-            //isLockedOn = false;
+            
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
-
+            //if the target is on the right
             if (targetOnRight)
             {
+                //rotate to the right
                 transform.right = tempTarget.transform.position - transform.position;
                 // isLockedOn = false;
             }
             else
             {
+                //rotate to the left
                 transform.right = -(tempTarget.transform.position - transform.position);
                 // isLockedOn = false;
             }
         }
-        /*  if(Input.GetKeyUp(KeyCode.Space))
-          {
-              closestTarget = TargetSetup();
 
-          }
-          else
-          {
-              isLockedOn = true;
-          }*/
 
 
 
@@ -169,29 +82,36 @@ public class TestMovement : MonoBehaviour
 
     private GameObject TargetSetup()
     {
+        // finds targets
         targets = GameObject.FindGameObjectsWithTag("Cling");
         closestTarget = null;
+        //checks target distance
         maxDistance = Mathf.Infinity;
+        
         Vector3 position = transform.position;
         if (closestTarget == targetAbove)
         {
             // distance *= 1.3f;
             //Debug.Log(distance);
         }
+        //foreach target find the closest 
         foreach (GameObject target in targets)
         {
 
+            //sets diff to be the differece between each target
             Vector3 diff = target.transform.position - position;
             distance = diff.sqrMagnitude;
+            //checks the distance between target and player
             if (distance < maxDistance)
             {
+                //finds the closest target based on distance
                 closestTarget = target;
                 maxDistance = distance;
             }
 
 
         }
-
+        //return closest target
         return closestTarget;
 
     }

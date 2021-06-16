@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectCollision : MonoBehaviour
 {
-    [SerializeField] private GameObject camera;
+   // [SerializeField] private GameObject camera;
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private GameObject player;
 
@@ -32,20 +32,25 @@ public class ObjectCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FreezeCamRot();
+        //FreezeCamRot();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        //if player collides with gameObject tagged Cling
         if (collision.gameObject.CompareTag("Cling"))
         {
+            //Destroy Player
             Destroy(player);
+            //player is dead
             isDead = true;
 
         }
+        //if player collides with gameobject tagged wall
         if (collision.gameObject.tag == "Wall")
         {
+            //destroy player
             Destroy(player);
+            //player is dead
             Debug.Log("Wall touched");
             isDead = true;
         }

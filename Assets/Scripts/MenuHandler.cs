@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuHandler : MonoBehaviour
@@ -21,11 +20,13 @@ public class MenuHandler : MonoBehaviour
 
     public void QuitGame()
     {
+        //quit game
         Application.Quit();
     }
 
     public void loadlevel(int scene)
     {
+        //load scene
         SceneManager.LoadScene(scene);
     }
 

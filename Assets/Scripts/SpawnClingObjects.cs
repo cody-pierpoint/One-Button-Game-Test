@@ -37,26 +37,23 @@ public class SpawnClingObjects : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // countdown = spawntimer;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if player exists
         if (player != null)
         {
+            //show score
             Score();
-            //countdown -= Time.deltaTime;
-            //if (countdown <= 0)
-            //{
-            //    SpawnObjects();
-            //    countdown = spawntimer;
-            //}
 
         }
 
         else
         {
+            //death screen is active
             deathPanel.SetActive(true);
             isDead = !isDead;
         }
@@ -64,23 +61,12 @@ public class SpawnClingObjects : MonoBehaviour
         
     }
 
-    //void SpawnObjects()
-    //{
-        
-    //    objectpos = new Vector3(Random.Range(xMin, yMin), Random.Range(yMin, yMax) + player.transform.position.y );
-
-    //    GameObject createdObject = Instantiate(prefab);
-    //    createdObject.transform.parent = gameObject.transform;
-    //    createdObject.transform.position = objectpos;
-    //}
-
-
 
     void Score()
     {
-
+        //score = time.time * 10;
         scoreTimer = (int)Time.time *10;
-
+        //display score as scoretext
         scoreText.text = "Score: " + scoreTimer;
     }
 }

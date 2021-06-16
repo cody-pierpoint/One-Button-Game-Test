@@ -14,11 +14,15 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //spawn position is set to new vector3
         Vector3 spawnposition = new Vector3();
         for (int i = 0; i < numberOfObjects; i++)
         {
+            //for spawnposition y is a random y value between min y and max Y
             spawnposition.y += Random.Range(minY, maxY);
+            //for spawnposition X is a random X value between min X and max X
             spawnposition.x = Random.Range(-levelWidth, levelWidth);
+            //create prefabed copy of object with position being spawn Position
             Instantiate(clingPrefab, spawnposition, Quaternion.identity);
 
         }
